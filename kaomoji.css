@@ -8,7 +8,7 @@ body {
 .grid-container {
     position: absolute;
     top: 30%; 
-    left: 25%; 
+    left: 23%; 
     width: 65%; 
     display: grid;
     grid-template-columns: repeat(6, 1fr); /* 6 equally spaced columns */
@@ -52,7 +52,6 @@ button{
       0 0 10px #fff,
       0 0 0px #d6c6f2;
 } 
-
 
 
 .heart-icon {
@@ -110,8 +109,8 @@ button{
     font-family: inter;
     position: fixed;
     top: calc(31% + 60px); 
-    left: calc(3% - 1%); 
-    width: 18%; 
+    left: calc(3.5% - 1%); 
+    width: 17%; 
     font-size: 10.8px;
     color: #ffffff;
     line-height: 1.6; 
@@ -121,6 +120,7 @@ button{
       0 0 10px #fff;
 }
 
+@media (max-width: 1024px) {
     .grid-container {
         top: 24%;
         left: 22%; 
@@ -160,6 +160,8 @@ button{
         font-size: 10px;
         width: 18.5%; 
     }
+
+}
 
 
 /* Adjust for smaller screens (phones, etc.) */
