@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Setting up the document with metadata and links to fonts/stylesheets -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Kaomoji Dictionary</title>
 
+    <!-- Preconnecting to Google Fonts for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
-
-
+    
+    <!-- Linking external stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
         integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <link rel="stylesheet" href="kaomoji.css">
+    <link rel="stylesheet" href="copy.css">
 </head>
 
-
-
 <body>
+    <!-- Page content: Header text and introductory information -->
     <div class="container">
         <div class="kaomoji-text">KAOMOJI</div>
         <div class="top-right-text">♡ʚ︎ʕ•̫͡•ʔฅɞ</div>
@@ -30,41 +32,53 @@
         </div>
     </div>
 
-        <!-- Grid container -->
-        <div class="grid-container" id="buttonGrid">
-        </div>  
-    </div>
+    <!-- Grid container where 36 buttons will be added dynamically -->
+    <div class="grid-container" id="buttonGrid"></div>  
 
-<!-- I put js file in html because it's easier to manage. -->
     <script>
-        
+        // Fetch data from the Kaomoji API
         fetch('https://api.kaomoji-db.com/alpha/kaomojis/?o=10&l=1500')
-            .then(response => response.json())
+            .then(response => response.json()) // Convert the response to JSON
             .then(data => {
-
-                const buttonGrid = document.getElementById('buttonGrid');
+                const buttonGrid = document.getElementById('buttonGrid'); // Select the grid container
+                // Get a unique list of the first category of each kaomoji
                 const uniqueCategories = [...new Set(data.kaomojis.map(kaomoji => kaomoji.categories[0]))];
-                const categoriesToDisplay = uniqueCategories.slice(0, 36);
-                
+                const categoriesToDisplay = uniqueCategories.slice(0, 36); // Limit to 36 categories
 
-                // Ensure we have 36 buttons
+                // Loop through and create 36 buttons
                 for (let i = 0; i < 36; i++) {
+                    // Create a container for each button
                     const buttonContainer = document.createElement('div');
                     buttonContainer.className = 'button-container';
+
+                    // Create the button itself
                     const button = document.createElement('a');
-                    button.href = i < categoriesToDisplay.length ? 'copy.html?kaomoji=' + encodeURIComponent(categoriesToDisplay[i]) : '#';
                     button.className = 'button-text';
-                    button.textContent = i < categoriesToDisplay.length ? categoriesToDisplay[i] : '';
+
+                    // If there's a category available, set the link and text
+                    if (i < categoriesToDisplay.length) {
+                        button.href = 'copy.html?kaomoji=' + encodeURIComponent(categoriesToDisplay[i]); // Link to copy page
+                        button.textContent = categoriesToDisplay[i]; // Display the category name
+                    } else {
+                        button.textContent = ''; // Empty text for extra buttons without categories
+                    }
+
+                    // Add a heart icon to each button
                     const heartIcon = document.createElement('img');
-                    heartIcon.src = 'kaomojipics/heart.png';
-                    heartIcon.alt = 'Heart Icon';
-                    heartIcon.className = 'heart-icon';
+                    heartIcon.src = 'kaomojipics/heart.png'; // Path to the heart icon image
+                    heartIcon.alt = 'Heart Icon'; // Alternative text for accessibility
+                    heartIcon.className = 'heart-icon'; // CSS class for styling
+
+                    // Append the heart icon and button to the container
                     buttonContainer.appendChild(heartIcon);
                     buttonContainer.appendChild(button);
+
+                    // Add the container to the grid
                     buttonGrid.appendChild(buttonContainer);
                 }
-            });
+            })
+            .catch(error => console.error('Error fetching kaomojis:', error)); // Handle any fetch errors
     </script>
-
-    </body>
-    </html>
+    
+</body>
+</html>
