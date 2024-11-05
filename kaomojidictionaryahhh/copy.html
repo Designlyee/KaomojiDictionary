@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Kaomoji Dictionary</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="copy.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="kaomoji-text">KAOMOJI</div>
+        <div class="top-right-text">♡ʚ︎ʕ•̫͡•ʔฅɞ</div>
+        <div class="introduction">
+            <p>The Kaomoji Dictionary is a simple collection of Japanese text-based emoticons used to express emotions in messages.</p>
+            <p>Kaomojis started in Japan as a way to show emotions using keyboard symbols. Unlike Western emoticons, they face forward, making expressions easy to see.</p>
+            <p>In this dictionary, you will find kaomojis for every mood and reaction—just choose one to add personality to your messages!</p>
+        </div>
+    </div>
+
+    <div class="new-grid-container">
+    </div>
+    
+    <img src="kaomojipics/pink-cat.png" alt="Pink Cat Icon" class="pink-cat" onclick="showNextPage()">
+    
+    <img src="kaomojipics/yellow-cat.png" alt="Yellow Cat Icon" class="yellow-cat">    
+
+    <script>
+        let currentPage = 0;
+        const itemsPerPage = 15;
+        let filteredKaomojis = [];
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const kaomojiParam = urlParams.get('kaomoji');
+        fetch('https://api.kaomoji-db.com/alpha/kaomojis/?o=10&l=1500')
+            .then(response => response.json())
+            .then(data => {
+                const gridContainer = document.querySelector('.new-grid-container');
+                filteredKaomojis = data.kaomojis.filter(kaomoji => kaomoji.categories.includes(kaomojiParam));
+                displayPage(filteredKaomojis, currentPage);
+            })
+            .catch(error => console.error('Error fetching kaomojis:', error));
+
+        function displayPage(filteredKaomojis, page) {
+            const gridContainer = document.querySelector('.new-grid-container');
+            gridContainer.innerHTML = '';
+            const start = page * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageKaomojis = filteredKaomojis.slice(start, end);
+            pageKaomojis.forEach(filteredKaomoji => {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'new-button-container';
+                const button = document.createElement('span');
+                button.className = 'new-button-text';
+                button.textContent = filteredKaomoji.string;
+                const copyIcon = document.createElement('img');
+                copyIcon.src = 'kaomojipics/copy.png';
+                copyIcon.alt = 'copy icon';
+                copyIcon.className = 'copy-icon';
+                copyIcon.addEventListener('click', () => {
+                    navigator.clipboard.writeText(filteredKaomoji.string)
+                        .then(() => {
+                            console.log('Kaomoji copied to clipboard!');
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy kaomoji: ', err);
+                        });
+                });
+                buttonContainer.appendChild(button);
+                buttonContainer.appendChild(copyIcon);
+                gridContainer.appendChild(buttonContainer);
+            });
+        }
+
+        function showNextPage() {
+            const totalPages = Math.ceil(filteredKaomojis.length / itemsPerPage);
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                displayPage(filteredKaomojis, currentPage);
+            } else {
+                console.log('No more pages to display.');
+            }
+        }
+    </script>
+</body>
+</html>

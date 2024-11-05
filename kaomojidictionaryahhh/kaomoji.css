@@ -1,0 +1,203 @@
+body {
+  background-image: url('kaomojipics/bkg.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+}
+
+.grid-container {
+    position: absolute;
+    top: 30%; 
+    left: 25%; 
+    width: 65%; 
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 equally spaced columns */
+    grid-gap: 14px; 
+    justify-content: start; 
+}
+
+.button-container {
+    position: relative;
+    width: 120px;
+    height: 52px;
+    background-color: transparent;
+    border: 2px solid #d8aef9; 
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    text-align: center;
+    cursor: pointer;
+    transition: background-colour 0.3s ease, background-image 0.3s ease;
+}
+button{
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.button-container:hover{
+    background-color: transparent;
+    background-image: linear-gradient(135deg, #4f3089, #7452b2);
+}
+
+.button-text {
+    position: absolute;
+    font-family: Pixelify Sans;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    color: #fefdff;
+    text-shadow:
+      0 0 5px #fff,
+      0 0 10px #fff,
+      0 0 0px #d6c6f2;
+} 
+
+
+
+.heart-icon {
+    position: absolute;
+    top: -15px; 
+    width: 30px;
+    height: 30px;
+    z-index: 0;
+}
+
+/* Container for KAOMOJI text */
+.container {
+    position: relative;
+    height: 100vh; /* Full viewport height */
+}
+
+.kaomoji-text {
+    font-family: Pixelify Sans;
+    position: fixed;
+    top: 31%; 
+    left: 4%; 
+    font-size: 40px;
+    color: #ffffff;
+    text-align: left;
+    text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px rgb(142, 98, 220),
+      0 0 82px rgb(142, 98, 220),
+      0 0 92px rgb(166, 0, 255),
+      0 0 102px rgb(149, 27, 215),
+      0 0 151px #0fa;
+}
+
+.top-right-text {
+    font-family: Pixelify Sans;
+    position: fixed;
+    top: calc(31% - 20px); 
+    left: calc(0% + 90px); 
+    font-size: 25px; 
+    color: #ffffff;
+    text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px rgb(142, 98, 220),
+      0 0 82px rgb(142, 98, 220),
+      0 0 92px rgb(166, 0, 255),
+      0 0 102px rgb(149, 27, 215),
+      0 0 151px #0fa;
+}
+
+.introduction {
+    font-family: inter;
+    position: fixed;
+    top: calc(31% + 60px); 
+    left: calc(3% - 1%); 
+    width: 18%; 
+    font-size: 10.8px;
+    color: #ffffff;
+    line-height: 1.6; 
+    text-shadow:
+      0 0 3px #fff,
+      0 0 5px #fff,
+      0 0 10px #fff;
+}
+
+    .grid-container {
+        top: 24%;
+        left: 22%; 
+        width: 70%; 
+        grid-template-columns: repeat(4, 1fr); 
+        grid-gap: 8px; 
+    }
+
+    .button-container {
+        height: 40px; 
+        border-width: 1px; 
+    }
+
+    .heart-icon {
+        top: -10px; 
+        width: 22px; 
+        height: 25px;
+    }
+
+    .button-text {
+        font-size: 16px;
+    }
+
+    .kaomoji-text {
+        top: 31%; 
+        left: -2%; 
+        font-size: 30px; /* Adjust font size */
+    }
+    .top-right-text {
+        top: calc(31% - 15px); 
+        left: calc(-10% + 80px); 
+        font-size: 20px; 
+    }
+    .introduction {
+        top: calc(30% + 50px);
+        left: -3%;
+        font-size: 10px;
+        width: 18.5%; 
+    }
+
+
+/* Adjust for smaller screens (phones, etc.) */
+@media (max-width: 768px) {
+    .grid-container {
+        top: 24%;
+        left: 30%; 
+        width: 60%; 
+        grid-template-columns: repeat(2, 1fr); 
+        grid-gap: 7px; 
+    }
+
+    .button-container {
+        height: 30px; 
+        width: 90px;
+        border-width: 1px; 
+    }
+
+    .button-text {
+        bottom: 2px;
+        font-size: 11px;
+    }
+    .introduction {
+        top: calc(30% + 40px); /* Adjust vertical spacing */
+        left: 3%;
+        font-size: 9px;
+        width: 17%; /* Adjust width for smaller screens */
+    }
+
+    .kaomoji-text {
+        top: 31%; 
+        left: 1%; 
+        font-size: 15px; 
+    }
+    .top-right-text {
+        top: calc(31% - 15px); 
+        left: calc(-10% + 30px); 
+        font-size: 15px; /* Smaller font size */
+    }
+
+}
