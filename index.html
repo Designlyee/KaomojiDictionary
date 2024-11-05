@@ -30,19 +30,23 @@
         </div>
     </div>
 
-        <!-- Grid container for the buttons -->
+        <!-- Grid container -->
         <div class="grid-container" id="buttonGrid">
         </div>  
     </div>
 
+<!-- I put js file in html because it's easier to manage. -->
     <script>
+        
         fetch('https://api.kaomoji-db.com/alpha/kaomojis/?o=10&l=1500')
             .then(response => response.json())
             .then(data => {
+
                 const buttonGrid = document.getElementById('buttonGrid');
                 const uniqueCategories = [...new Set(data.kaomojis.map(kaomoji => kaomoji.categories[0]))];
                 const categoriesToDisplay = uniqueCategories.slice(0, 36);
                 
+
                 // Ensure we have 36 buttons
                 for (let i = 0; i < 36; i++) {
                     const buttonContainer = document.createElement('div');

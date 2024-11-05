@@ -44,6 +44,8 @@
         fetch('https://api.kaomoji-db.com/alpha/kaomojis/?o=10&l=1500')
             .then(response => response.json())
             .then(data => {
+
+                
                 const gridContainer = document.querySelector('.new-grid-container');
                 filteredKaomojis = data.kaomojis.filter(kaomoji => kaomoji.categories.includes(kaomojiParam));
                 displayPage(filteredKaomojis, currentPage);
