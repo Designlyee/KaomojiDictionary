@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Kaomoji Dictionary</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="kaomoji.css">
+</head>
+
+
+
+<body>
+    <div class="container">
+        <div class="kaomoji-text">KAOMOJI</div>
+        <div class="top-right-text">♡ʚ︎ʕ•̫͡•ʔฅɞ</div>
+        <div class="introduction">
+            <p>The Kaomoji Dictionary is a simple collection of Japanese text-based emoticons used to express emotions in messages.</p>
+            <p>Kaomojis started in Japan as a way to show emotions using keyboard symbols. Unlike Western emoticons, they face forward, making expressions easy to see.</p>
+            <p>In this dictionary, you will find kaomojis for every mood and reaction—just choose one to add personality to your messages!</p>
+        </div>
+    </div>
+
+        <!-- Grid container for the buttons -->
+        <div class="grid-container" id="buttonGrid">
+        </div>  
+    </div>
+
+    <script>
+        fetch('https://api.kaomoji-db.com/alpha/kaomojis/?o=10&l=1500')
+            .then(response => response.json())
+            .then(data => {
+                const buttonGrid = document.getElementById('buttonGrid');
+                const uniqueCategories = [...new Set(data.kaomojis.map(kaomoji => kaomoji.categories[0]))];
+                const categoriesToDisplay = uniqueCategories.slice(0, 36);
+                
+                // Ensure we have 36 buttons
+                for (let i = 0; i < 36; i++) {
+                    const buttonContainer = document.createElement('div');
+                    buttonContainer.className = 'button-container';
+                    const button = document.createElement('a');
+                    button.href = i < categoriesToDisplay.length ? 'copy.html?kaomoji=' + encodeURIComponent(categoriesToDisplay[i]) : '#';
+                    button.className = 'button-text';
+                    button.textContent = i < categoriesToDisplay.length ? categoriesToDisplay[i] : '';
+                    const heartIcon = document.createElement('img');
+                    heartIcon.src = 'kaomojipics/heart.png';
+                    heartIcon.alt = 'Heart Icon';
+                    heartIcon.className = 'heart-icon';
+                    buttonContainer.appendChild(heartIcon);
+                    buttonContainer.appendChild(button);
+                    buttonGrid.appendChild(buttonContainer);
+                }
+            });
+    </script>
+
+    </body>
+    </html>
